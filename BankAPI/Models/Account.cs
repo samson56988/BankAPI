@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BankAPI.Models
@@ -23,7 +24,10 @@ namespace BankAPI.Models
 
         //we'll also store the hash and salt of the account Transaction pin
 
+        [JsonIgnore]
         public byte[] PinHash { get; set; }
+
+        [JsonIgnore]
 
         public byte[] Pinsalt { get; set; }
 
@@ -39,9 +43,9 @@ namespace BankAPI.Models
 
         public Account() 
         {
-            AccountNumberGenerated =  Convert.ToString((long) rand.NextDouble() * 9_000_000_000L + 1_000_000_000L);
+            AccountNumberGenerated =  Convert.ToString((long) Math.Floor(rand.NextDouble() * 9_000_000_000L + 1_000_000_000L));
             //also AccountName property = FirstName and Lastname
-            AccountName = $"{Firstname} {Lastname}"; //e.g John
+            AccountName = $"{Firstname}  {Lastname}"; //e.g John
 
         }
        
